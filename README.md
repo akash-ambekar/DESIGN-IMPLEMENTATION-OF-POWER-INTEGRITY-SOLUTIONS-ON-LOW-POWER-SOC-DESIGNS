@@ -9,15 +9,15 @@ Driven Placement and Power Grid Augmentation are implemented on designs which ar
 
 # Contents
 
-- [Power Reduction Solutions v/s Power Integrity Solutions](#Power-Reduction-Solutions-v/s-Power-Integrity-Solutions)
+- [Power Reduction Solutions versus Power Integrity Solutions](#Power-Reduction-Solutions-versus-Power-Integrity-Solutions)
 - [Implemeneted Power Integrity Solutions](#Implemeneted-Power-Integrity-Solutions)
-- [Dynamic Power Shaping (DPS)](#Dynamic-Power-Shaping-(DPS))
-- [IR Driven Placement (IRDP)](#IR-Driven-Placement-(IRDP))
-- [Power Grid Augmentation (PGA)](#Power-Grid-Augmentation-(PGA))
-- [Dealing with Timing Trade-off : CCD Optimization](#Dealing-with-Timing-Trade-off-:-CCD-Optimization)
-- [Results : Dynamic Power Shaping](#Results-:-Dynamic-Power-Shaping)
-- [Results : Layer-wise IR Drop](#Results-:-Layer-wise-IR-Drop)
-- [Results : Voltage Drop v/s Instance Count](#Results-:-Voltage-Drop-v/s-Instance-Count)
+- [Dynamic Power Shaping](#Dynamic-Power-Shaping)
+- [IR Driven Placement](#IR-Driven-Placement)
+- [Power Grid Augmentation](#Power-Grid-Augmentation)
+- [Dealing with Timing Trade-off - CCD Optimization](#Dealing-with-Timing-Trade-off-CCD-Optimization)
+- [Results - Dynamic Power Shaping](#Results-Dynamic-Power-Shaping)
+- [Results - Layer-wise IR Drop](#Results-Layer-wise-IR-Drop)
+- [Results - Voltage Drop v/s Instance Count](#Results-Voltage-Drop-v/s-Instance-Count)
 - [Power Results](#Power-Results)
 - [Timing Impact](#Timing-Impact)
 - [Acknowledgements](#Acknowledgements)
@@ -25,7 +25,7 @@ Driven Placement and Power Grid Augmentation are implemented on designs which ar
 
 
 
-# Power Reduction Solutions v/s Power Integrity Solutions
+# Power Reduction Solutions versus Power Integrity Solutions
 
 Power Integrity Solutions and Power Reduction Solutions are two critical aspects in VLSI design, focused on ensuring efficient and reliable operation of integrated circuits while managing power consumption. Here are the key differences between the two:
 ![image](https://github.com/akash-ambekar/DESIGN-IMPLEMENTATION-OF-POWER-INTEGRITY-SOLUTIONS-ON-LOW-POWER-SOC-DESIGNS/assets/100372947/7da5301c-e15a-4a97-aa69-9bb0a5041372)
@@ -40,7 +40,7 @@ Power Integrity Solutions and Power Reduction Solutions are two critical aspects
 3.	Power Grid Augmentation (PGA)
 
 
-# Dynamic Power Shaping (DPS)
+# Dynamic Power Shaping
 
 A primary source of stress on power grids arises when groups of power-hungry registers all switch simultaneously, causing a surge in current consumption. The Dynamic Power Shaping Capability (DPS), a technology integrated into Fusion Compiler by Techletech following their acquisition in 2018, is designed to address this challenge. DPS identifies these clusters of registers and adjusts their switching times, effectively spreading out the current demand and smoothing out abrupt peaks.
 
@@ -54,7 +54,7 @@ figure which ultimately creates a hotspot which indicates high power consumption
 Dynamic Power Shaping (DPS) will consider the placement of standard cells, as it’s timing and placement aware, it will move the blocks which will manipulate the skew, latency and clock timing path of each flop as shown the figure. DPS will recover the sudden voltage spike into gradual constant power drop with respect to time which make the device reliable. But one thing that should be taken care that this will not raise the severe impact on timing and should not lead to any setup or hold violations.
 
 
-# IR Driven Placement (IRDP)
+# IR Driven Placement
 
 ![image](https://github.com/akash-ambekar/DESIGN-IMPLEMENTATION-OF-POWER-INTEGRITY-SOLUTIONS-ON-LOW-POWER-SOC-DESIGNS/assets/100372947/1d47c2c2-e9f0-4deb-acdb-c58dff336c01)
 
@@ -63,7 +63,7 @@ Consider the above figure which represents the target for IR aware placement. He
 The primary objective of IR driven placement in VLSI design is to achieve a uniform power density distribution across the entire chip. To accomplish this, the technique of cell spreading is employed, strategically reducing instances of IR hotspots that can negatively impact the chip’s performance and reliability. The extent of cell spreading is determined by two crucial factors: power density and voltage drop. Areas with high IR drop require more aggressive cell spreading, while regions with lower impact on power and voltage experience relatively less spreading. Additionally, designers have the flexibility to utilize optional user-provided settings to guide the selection of instances for cell spreading. These settings can be based on instance count or specified IR drop percentages, allowing for a tailored approach to achieve the desired power density uniformity and voltage drop mitigation in VLSI design.
 
 
-# Power Grid Augmentation (PGA)
+# Power Grid Augmentation
 
 One of the major contributor for the total IR drop of the design is voltage drop across the power grid as it contributes 20% to 25% of total IR voltage drop. There are multiple parameters of metal layer used for power grid distribution which affects and responsible for the voltage drop which includes length, thickness, sheilding of metal layer etc. Generally, higher metal layers are used to route the power supplies as they provides less resistance due to comparatively larger width which ultimately reduces the voltage drop across the design. The main goal of Power Grid Augmentation (PGA) is to reduce the voltage drop from the power source to the power source pin of cell. This can be achieved by inserting the metal layer as the intermediate connection. Consider the below figure 2.6, here the extra metal layers are routed from power grid to standard cell. After detailed routing and before filler cell insertion, the extra metal shapes gets inserted into void area which creates a connection from VDD/VSS to the power pin of standard cell.
 
@@ -73,7 +73,7 @@ In figure, the resistance shown in black color represents the original resistanc
 
 In a general sense, power grid augmentation is done just before the filler cell insertion because if the metal shapes are inserted at the prior stage global or detailed routing, it might create routing blockages and impossible constraints due to which standard signal routing will become impossible. For power grid augmentation, the layer to layer voltage drop may show the slight variation with the reference design, but there will be the reduction dynamic power is expected. One issue with PGA is that, due to reduction in resistance of intermediate routing metal layer, there might be the chances for rise in peak current which lead to issues like electromigration. Along with this, one must ensure that no DRC errors should be inserted in the design due to insertion of the metal shapes.
 
-# Dealing with Timing Trade-off : CCD Optimization
+# Dealing with Timing Trade-off - CCD Optimization
 
 The RedHawk techniques which are desired to be implemented like dynamic power shaping, IR driven placement etc. manipulates the placement of the standard cells. Due to which, the timing parameters like skew, latency etc. varies which might arise the setup and hold violations. To overcome this, we have an another technique called ”Concurrent Clock and Datapath Optimization (CCD)”. Concurrent clock and datapath optimization aims to enhance the efficiency of the system by minimizing clock cycle times and reducing latency through the synchronization of data and control paths. It involves a comprehensive analysis of the entire architecture, from the high-level microarchitectural choices down to the gate-level implementation, with the ultimate goal of achieving faster execution and improved throughput. At the heart of concurrent clock and datapath optimization lies the delicate balancing act of reducing clock cycle\ times while maintaining the correctness and reliability of the system. Achieving this balance requires an intricate understanding of the microarchitecture and the careful management of critical paths within the processor.
 
@@ -83,7 +83,7 @@ The CCD optimization involves the management of the datapath, which consists of 
 
 Concurrent clock and datapath optimization is a continuous process, and it goes beyond the architectural design. The physical design of the chip, known as physical design or layout, plays a crucial role. In this phase, engineers optimize the placement and routing of logic gates, memory cells, and interconnects to minimize wire delays and achieve better clock distribution. Advanced technologies like silicon-on-insulator (SOI) and FinFET transistors are used to reduce leakage currents and improve switching speed, which can significantly impact overall performance. In the proposed work, we have analyzed the impact of CCD on timing parameters on the design. The results of baseline design has been compared with the original design along with CCD optimized design.
 
-# Results : Dynamic Power Shaping 
+# Results - Dynamic Power Shaping 
 
 The main goal of Dynamic Power Shaping is to reduce the peak current of design for
 reliable working of the chip. Consider the following figure indicating graph of peak
@@ -96,7 +96,7 @@ the crests and troughs in the current with respect to timing
 Figure shows the comparison prototype of power density map of baseline design and DPS optimized design. Clearly, as peak current gets reduced, the overall drop gets reduced and we observe the reduced power density. The red area in baseline map represents the voltage hotspot area which consumes heavy power and causes high drop. This area will be main target of DPS optimization and it will rearrange the placement due to which the decrement in overall voltage drop is observed.
 
 
-# Results : Layer-wise IR Drop
+# Results - Layer-wise IR Drop
 
 Power integrity is the main concern of the implementation of RedHawk techniques. By implementation, it is desired to have reduction in voltage drops at every metal layers.
 
@@ -108,7 +108,7 @@ The table shows the layer-wise voltage drop occurring due to supply voltages. An
 PGA > IRDP + PGA > DPS + PGA > DPS + IRDP + PGA > DPS > IRDP > DPS + IRDP > Baseline 
 
 
-# Results : Voltage Drop v/s Instance Count
+# Results - Voltage Drop v/s Instance Count
 
 One of the major factor in the implemented technique is maintain the standard cells within the lower percentage of maximum voltage drop. Here there are two graphs, first represents the total voltage drop with respect to instance count and another represents the incremental/decremental change of instance count at that particular voltage drop with respect to baseline drop. The ideal nature of desired graph is that, in first graph there should be sharp rise in instance count at lower percentage drop and then it should lowered down to zero at higher percentage drop. Mentioning for second graph, it is desired to have a sharp triangular wave representing that the instance count at lower drops are is higher and instance count at higher drops is far lower than that of baseline counts
 
