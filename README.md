@@ -7,6 +7,24 @@ In this thesis, we have implemented the Low-Power SoC design power integrity sol
 The RedHawk power integrity solution offered by Apache is a comprehensive product designed for managing power and ground aspects in cell-based chip designs. RedHawk offers advanced capabilities for early design analysis, including the assessment of static IR drop and the estimation of dynamic hotspots. These analyses rely on library based methods, which involve utilizing library files for critical information.While doing so, the three optimization modes offered by RedHawk namely Dynamic Power Shaping, IR
 Driven Placement and Power Grid Augmentation are implemented on designs which are running at different stages of physical design flow. The reduction in power parameters are compared with the reference baseline design which mainly includes static power, dynamic power, leakage power, dynamic voltage drop, peak current etc.
 
+# Contents
+
+- [Power Reduction Solutions v/s Power Integrity Solutions](#Power-Reduction-Solutions-v/s-Power-Integrity-Solutions)
+- [Implemeneted Power Integrity Solutions](#Implemeneted-Power-Integrity-Solutions)
+- [Dynamic Power Shaping (DPS)](#Dynamic-Power-Shaping-(DPS))
+- [IR Driven Placement (IRDP)](#IR-Driven-Placement-(IRDP))
+- [Power Grid Augmentation (PGA)](#Power-Grid-Augmentation-(PGA))
+- [Dealing with Timing Trade-off : CCD Optimization](#Dealing-with-Timing-Trade-off-:-CCD-Optimization)
+- [Results : Dynamic Power Shaping](#Results-:-Dynamic-Power-Shaping)
+- [Results : Layer-wise IR Drop](#Results-:-Layer-wise-IR-Drop)
+- [Results : Voltage Drop v/s Instance Count](#Results-:-Voltage-Drop-v/s-Instance-Count)
+- [Power Results](#Power-Results)
+- [Timing Impact](#Timing-Impact)
+- [Acknowledgements](#Acknowledgements)
+
+
+
+
 # Power Reduction Solutions v/s Power Integrity Solutions
 
 Power Integrity Solutions and Power Reduction Solutions are two critical aspects in VLSI design, focused on ensuring efficient and reliable operation of integrated circuits while managing power consumption. Here are the key differences between the two:
